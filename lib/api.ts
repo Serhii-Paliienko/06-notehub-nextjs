@@ -1,6 +1,6 @@
 import type { AxiosInstance } from "axios";
 import axios from "axios";
-import type { Note, NoteTag } from "../types/note";
+import type { Note, NoteTag } from "@/types/note";
 
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 if (!token) throw new Error("Missing NEXT_PUBLIC_NOTEHUB_TOKEN");
@@ -50,7 +50,11 @@ export async function deleteNote(id: string): Promise<Note> {
   return res.data.note;
 }
 
-export async function fetchNoteById(id: string) {
-  const res = await api.get<{ note: Note }>(`/notes/${id}`);
-  return res.data.note;
+export async function fetchNoteById(id: string): Promise<Note> {
+  const res = await api.get<{ note: Note | null }>(`/notes/${id}`);
+  const note = res.data.note;
+  if (!note) {
+    throw new Error("Note not found");
+  }
+  return note;
 }
