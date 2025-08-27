@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { createNote, type CreateNoteInput } from "@/lib/api";
 import type { NoteTag } from "../../types/note";
