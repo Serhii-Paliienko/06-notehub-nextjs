@@ -51,10 +51,9 @@ export async function deleteNote(id: string): Promise<Note> {
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
-  const res = await api.get<{ note: Note | null }>(`/notes/${id}`);
-  const note = res.data.note;
-  if (!note) {
+  const res = await api.get<Note>(`/notes/${id}`);
+  if (!res.data) {
     throw new Error("Note not found");
   }
-  return note;
+  return res.data;
 }
